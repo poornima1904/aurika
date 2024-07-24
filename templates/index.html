@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice Generator</title>
+</head>
+<body>
+    <h1>Invoice Generator</h1>
+    <form id="invoice-form">
+        <!-- Add your form fields here -->
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description"><br><br>
+        <label for="unit_price">Unit Price:</label>
+        <input type="number" id="unit_price" name="unit_price"><br><br>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity"><br><br>
+        <label for="discount">Discount:</label>
+        <input type="number" id="discount" name="discount"><br><br>
+        <label for="tax_rate">Tax Rate:</label>
+        <input type="number" id="tax_rate" name="tax_rate"><br><br>
+        <button type="submit">Generate Invoice</button>
+    </form>
+
+    <script>
+        document.getElementById('invoice-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const data = {
+                description: document.getElementById('description').value,
+                unit_price: parseFloat(document.getElementById('unit_price').value),
+                quantity: parseInt(document.getElementById('quantity').value),
+                discount: parseFloat(document.getElementById('discount').value),
+                tax_rate: parseFloat(document.getElementById('tax_rate').value)
+            };
+
+            fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert('Invoice generated successfully');
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
