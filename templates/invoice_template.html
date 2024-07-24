@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .invoice-box {
+            width: 100%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+        .header, .section {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .header img {
+            max-width: 200px;
+        }
+        .section table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .section table, .section th, .section td {
+            border: 1px solid black;
+        }
+        .section th, .section td {
+            padding: 10px;
+            text-align: left;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <div class="header">
+            <img src="{{ logo }}" alt="Company Logo">
+            <h2>Tax Invoice/Bill of Supply/Cash Memo</h2>
+            <p>(Original for Recipient)</p>
+        </div>
+        <div class="section">
+            <table>
+                <tr>
+                    <td>Sold By:</td>
+                    <td>{{ seller_details }}</td>
+                    <td>Billing Address:</td>
+                    <td>{{ billing_details }}</td>
+                </tr>
+                <tr>
+                    <td>Shipping Address:</td>
+                    <td>{{ shipping_details }}</td>
+                    <td>Order Number:</td>
+                    <td>{{ order_details.order_no }}</td>
+                </tr>
+                <tr>
+                    <td>Order Date:</td>
+                    <td>{{ order_details.order_date }}</td>
+                    <td>Invoice Number:</td>
+                    <td>{{ invoice_details.invoice_no }}</td>
+                </tr>
+                <tr>
+                    <td>Invoice Date:</td>
+                    <td>{{ invoice_details.invoice_date }}</td>
+                    <td>Reverse Charge:</td>
+                    <td>{{ reverse_charge }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sl. No</th>
+                        <th>Description</th>
+                        <th>Unit Price</th>
+                        <th>Quantity</th>
+                        <th>Discount</th>
+                        <th>Net Amount</th>
+                        <th>Tax Type</th>
+                        <th>Tax Rate</th>
+                        <th>Tax Amount</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.unit_price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.discount }}</td>
+                        <td>{{ item.net_amount }}</td>
+                        <td>{{ item.tax_type }}</td>
+                        <td>{{ item.tax_rate }}%</td>
+                        <td>{{ item.tax_amount }}</td>
+                        <td>{{ item.total_amount }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="8"></td>
+                        <td>Total:</td>
+                        <td>{{ total_amount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <p>Amount in Words: {{ amount_in_words }}</p>
+            <p>For {{ seller_name }}:</p>
+            <img src="{{ signature }}" alt="Signature" style="width: 100px;">
+            <p>Authorized Signatory</p>
+        </div>
+    </div>
+</body>
+</html>
