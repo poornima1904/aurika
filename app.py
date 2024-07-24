@@ -9,12 +9,15 @@ def index():
 
 @app.route('/generate', methods=['POST'])
 def generate():
-    if request.is_json:
-        data = request.get_json()
-        generate_invoice(data)
-        return "Invoice generated successfully", 200
-    else:
-        return "Unsupported Media Type", 415
+    data = {
+        'description': request.form.get('description'),
+        'unit_price': float(request.form.get('unit_price')),
+        'quantity': int(request.form.get('quantity')),
+        'discount': float(request.form.get('discount')),
+        'tax_rate': float(request.form.get('tax_rate'))
+    }
+    generate_invoice(data)
+    return "Invoice generated successfully", 200
 
 if __name__ == '__main__':
     app.run(debug=True)
