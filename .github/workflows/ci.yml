@@ -23,5 +23,14 @@ jobs:
         pip install -r requirements.txt
         pip install pytest
 
+    - name: Show Python version
+      run: python --version
+
+    - name: Show pip version
+      run: pip --version
+
+    - name: List installed packages
+      run: pip list
+
     - name: Run tests
       run: pytest
